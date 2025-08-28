@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CreateMLCEngine } from "@mlc-ai/web-llm";
-"use client";
-import { useEffect, useRef, useState } from "react";
 
 // Make this page dynamic to avoid static prerender (which caused DOMMatrix errors)
 export const dynamic = "force-dynamic";
