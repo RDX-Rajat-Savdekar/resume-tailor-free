@@ -1,51 +1,49 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CreateMLCEngine } from "@mlc-ai/web-llm";
+"use client";
+import { useEffect, useRef, useState } from "react";
 
-// app/page.jsx (top)
-import * as pdfjsLib from "pdfjs-dist";
+// Make this page dynamic to avoid static prerender (which caused DOMMatrix errors)
+export const dynamic = "force-dynamic";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-
+// ---- PDF extract helper (lazy import so it only runs in browser) ----
 async function extractTextFromPDF(file) {
+  // Load pdf.js only when needed, on the client
+  const pdfjsLib = await import("pdfjs-dist/build/pdf");
+  // Point the worker to the file we copy during postinstall
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
   const data = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data }).promise;
+
   let full = "";
   for (let p = 1; p <= pdf.numPages; p++) {
     const page = await pdf.getPage(p);
     const content = await page.getTextContent();
-    full += content.items.map(i => i.str).join(" ") + "\n\n";
+    full += content.items.map((i) => i.str).join(" ") + "\n\n";
   }
   return full.replace(/\s+\n/g, "\n").replace(/\s{2,}/g, " ").trim();
 }
 
 
-// ------- PDF extract helper (pdfjs) -------
-// let pdfjsLibPromise = null;
+// // app/page.jsx (top)
+// import * as pdfjsLib from "pdfjs-dist";
+
+// pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
 // async function extractTextFromPDF(file) {
-//   if (!pdfjsLibPromise) {
-//     pdfjsLibPromise = import("pdfjs-dist/build/pdf").then(async (m) => {
-//       const pdfjsLib = m;
-//       // Use worker from the package (Next.js needs an explicit path)
-//       const worker = await import("pdfjs-dist/build/pdf.worker.mjs");
-//       pdfjsLib.GlobalWorkerOptions.workerSrc = worker;
-//       return pdfjsLib;
-//     });
-//   }
-//   const pdfjsLib = await pdfjsLibPromise;
 //   const data = await file.arrayBuffer();
 //   const pdf = await pdfjsLib.getDocument({ data }).promise;
-
 //   let full = "";
 //   for (let p = 1; p <= pdf.numPages; p++) {
 //     const page = await pdf.getPage(p);
 //     const content = await page.getTextContent();
-//     const pageText = content.items.map((i) => i.str).join(" ");
-//     full += pageText + "\n\n";
+//     full += content.items.map(i => i.str).join(" ") + "\n\n";
 //   }
-//   // basic cleanup
 //   return full.replace(/\s+\n/g, "\n").replace(/\s{2,}/g, " ").trim();
 // }
+
 
 // ------- Sample data -------
 const SAMPLE_RESUME = `Built React & Flask dashboards exposing realtime stock and payouts; reduced spoilage.

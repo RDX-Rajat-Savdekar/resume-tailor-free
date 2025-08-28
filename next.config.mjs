@@ -1,1 +1,1 @@
-export default { experimental: { serverActions: true } }
+export default {}
