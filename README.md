@@ -4,7 +4,7 @@
 It compares your resume with a given JD, highlights missing keywords, and provides actionable insights to improve alignment.
 
 Live Demo: [https://resume-tailor-free-8hy3.vercel.app/] 
-( https://resume.rajatsavdekar.dev )
+( Portfolio - https://resume.rajatsavdekar.dev )
 
 ---
 
@@ -113,7 +113,3 @@ Pull requests welcome! Here’s what we’re especially looking for:
 ## 📜 License
 
 MIT License — feel free to use, share, and build on top of Resume Tailor.
-
----
-
-Would you like me to also create a **short version (resume-style)** README (like a blurb + tech stack) that looks great if someone lands on your GitHub profile, alongside this detailed one?
