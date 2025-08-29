@@ -4,7 +4,7 @@
 It compares your resume with a given JD, highlights missing keywords, and provides actionable insights to improve alignment.
 
 Live Demo: [https://resume-tailor-free-8hy3.vercel.app/] 
-( Portfolio - https://resume.rajatsavdekar.dev )
+( Portfolio - https://rajatsavdekar.dev/ )
 
 ---
 
